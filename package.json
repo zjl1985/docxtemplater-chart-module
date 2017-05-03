@@ -1,0 +1,109 @@
+{
+    "_args": [
+        [{
+                "raw": "docxtemplater-chart-module",
+                "scope": null,
+                "escapedName": "docxtemplater-chart-module",
+                "name": "docxtemplater-chart-module",
+                "rawSpec": "",
+                "spec": "latest",
+                "type": "tag"
+            },
+            "D:\\test\\chart"
+        ]
+    ],
+    "_cnpm_publish_time": 1486418200403,
+    "_from": "docxtemplater-chart-module@latest",
+    "_hasShrinkwrap": false,
+    "_id": "docxtemplater-chart-module@3.0.2",
+    "_inCache": true,
+    "_location": "/docxtemplater-chart-module",
+    "_nodeVersion": "7.4.0",
+    "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/docxtemplater-chart-module-3.0.2.tgz_1486418198443_0.16306944750249386"
+    },
+    "_npmUser": {
+        "name": "zhangjunlong",
+        "email": "zjl198544@163com"
+    },
+    "_npmVersion": "4.1.2",
+    "_phantomChildren": {},
+    "_requested": {
+        "raw": "docxtemplater-chart-module",
+        "scope": null,
+        "escapedName": "docxtemplater-chart-module",
+        "name": "docxtemplater-chart-module",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+    },
+    "_requiredBy": [
+        "#USER"
+    ],
+    "_resolved": "http://registry.npm.taobao.org/docxtemplater-chart-module/download/docxtemplater-chart-module-3.0.2.tgz",
+    "_shasum": "a8d38d512986a6a8fcd1fcb753cfa9b8ef841601",
+    "_shrinkwrap": null,
+    "_spec": "docxtemplater-chart-module",
+    "_where": "D:\\test\\chart",
+    "author": {
+        "name": "Edgar Hipp"
+    },
+    "bugs": {
+        "url": "https://github.com/open-xml-templating/docxtemplater-chart-module/issues"
+    },
+    "dependencies": {
+        "xmldom": "^0.1.27"
+    },
+    "description": "chart Module for docxtemplater",
+    "devDependencies": {
+        "babel-cli": "^6.11.4",
+        "babel-eslint": "^7.1.1",
+        "babel-preset-es2015": "^6.3.13",
+        "browserify": "^14.0.0",
+        "chai": "^3.4.1",
+        "docxtemplater": "^3.0.0",
+        "eslint": "^3.15.0",
+        "istanbul": "^0.4.5",
+        "jszip": "^2.6.1",
+        "mkdirp": "^0.5.1",
+        "mocha": "^3.2.0",
+        "rimraf": "^2.5.4",
+        "uglifyjs": "^2.4.10"
+    },
+    "directories": {},
+    "dist": {
+        "shasum": "a8d38d512986a6a8fcd1fcb753cfa9b8ef841601",
+        "size": 195284,
+        "noattachment": false,
+        "tarball": "http://registry.npm.taobao.org/docxtemplater-chart-module/download/docxtemplater-chart-module-3.0.2.tgz"
+    },
+    "gitHead": "303222abc2d0593faee37acf81b44312ff51e03d",
+    "homepage": "https://github.com/open-xml-templating/docxtemplater-chart-module#readme",
+    "license": "MIT",
+    "main": "js/index.js",
+    "maintainers": [{
+        "name": "zhangjunlong",
+        "email": "zjl198544@163.com"
+    }],
+    "name": "docxtemplater-chart-module",
+    "optionalDependencies": {},
+    "publish_time": 1486418200403,
+    "readme": "ERROR: No README data found!",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/open-xml-templating/docxtemplater-chart-module.git"
+    },
+    "scripts": {
+        "browserify": "browserify --insert-global-vars __filename,__dirname -r ./es6/index.js -s ChartModule > build/chartmodule.js",
+        "compile": "rimraf js && mkdirp js && babel es6 --out-dir js",
+        "lint": "eslint .",
+        "preversion": "npm test && npm run compile && npm run browserify && npm run uglify",
+        "test": "npm run compile && npm run test:compiled",
+        "test:compiled": "mocha js/test.js",
+        "test:coverage": "istanbul cover _mocha --  es6/test.js",
+        "test:es6": "mocha es6/test.js",
+        "uglify": "uglifyjs build/chartmodule.js > build/chartmodule.min.js"
+    },
+    "version": "3.0.2"
+}
