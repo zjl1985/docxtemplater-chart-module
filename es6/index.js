@@ -21,9 +21,7 @@ class ChartModule {
         this.options = options || {};
         this.chartManagers = {};
         if (this.options.centered == null) { this.options.centered = false; }
-        if (this.options.getImage == null) { throw new Error("You should pass getImage"); }
-        if (this.options.getSize == null) { throw new Error("You should pass getSize"); }
-        this.imageNumber = 1;
+        this.chartNumber = 1;
     }
     optionsTransformer(options, docxtemplater) {
         const relsFiles = docxtemplater.zip.file(/\.xml\.rels/)
@@ -70,38 +68,38 @@ class ChartModule {
         try {
             const tagValue = options.scopeManager.getValue(part.value);
             if (!tagValue) {
+                console.error('tagValue is empty');
                 throw new Error("tagValue is empty");
             }
             // const imgBuffer = this.options.getImage(tagValue, part.value);
 
-            const imgBuffer = templates.getChartTestXml();
-            const rId = chartManager.addImageRels(this.getNextImageName(), imgBuffer);
-            const sizePixel = 0;
-            console.log(tagValue);
-            return this.getRenderedPart(part, rId, sizePixel);
+            const chartXML = templates.getChartTestXml();
+            const rId = chartManager.addImageRels(this.getNextImageName(), chartXML);
+            return this.getRenderedPart(part, rId);
             // return { value: '<w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr><w:t>' + tagValue + '</w:t>' };
         } catch (e) {
             console.error(this.fileTypeConfig.tagTextXml);
             return { value: this.fileTypeConfig.tagTextXml };
         }
     }
-    getRenderedPart(part, rId, sizePixel) {
+    getRenderedPart(part, rId) {
         if (isNaN(rId)) {
+            console.error('rId is NaN, abortin');
+
             throw new Error("rId is NaN, aborting");
         }
-        const size = [DocUtils.convertPixelsToEmus(sizePixel[0]), DocUtils.convertPixelsToEmus(sizePixel[1])];
-        const centered = (this.options.centered || part.centered);
+
         let newText;
-        newText = this.getRenderedPartDocx(rId, size, centered);
+        newText = this.getRenderedPartDocx(rId);
         return { value: newText };
     }
-    getRenderedPartDocx(rId, size, centered) {
+    getRenderedPartDocx(rId) {
         // return centered ? templates.getChartXmlCentered(rId, size) : templates.getChartXml(rId, size);
-        return templates.getChartXml(rId, size);
+        return templates.getChartXml(rId);
     }
     getNextImageName() {
-        const name = `chart_${this.imageNumber}.xml`;
-        this.imageNumber++;
+        const name = `chart_${this.chartNumber}.xml`;
+        this.chartNumber++;
         return name;
     }
 }

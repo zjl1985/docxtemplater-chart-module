@@ -22,8 +22,6 @@ class ChartModule {
         this.options = options || {};
         this.chartManagers = {};
         if (this.options.centered == null) { this.options.centered = false; }
-        if (this.options.getImage == null) { throw new Error("You should pass getImage"); }
-        if (this.options.getSize == null) { throw new Error("You should pass getSize"); }
         this.imageNumber = 1;
     }
     optionsTransformer(options, docxtemplater) {
@@ -71,36 +69,34 @@ class ChartModule {
         try {
             const tagValue = options.scopeManager.getValue(part.value);
             if (!tagValue) {
+                console.error('tagValue is empty');
                 throw new Error("tagValue is empty");
             }
             // const imgBuffer = this.options.getImage(tagValue, part.value);
 
-            const imgBuffer = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:c16r2="http://schemas.microsoft.com/office/drawing/2015/06/chart"><c:date1904 val="0"/><c:lang val="zh-CN"/><c:roundedCorners val="0"/><mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><mc:Choice Requires="c14" xmlns:c14="http://schemas.microsoft.com/office/drawing/2007/8/2/chart"><c14:style val="102"/></mc:Choice><mc:Fallback><c:style val="2"/></mc:Fallback></mc:AlternateContent><c:chart><c:title><c:overlay val="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="0" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="1400" b="0" i="0" u="none" strike="noStrike" kern="1200" spc="0" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:title><c:autoTitleDeleted val="0"/><c:plotArea><c:layout/><c:barChart><c:barDir val="col"/><c:grouping val="clustered"/><c:varyColors val="0"/><c:ser><c:idx val="0"/><c:order val="0"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 1</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent1"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>4.3</c:v></c:pt><c:pt idx="1"><c:v>2.5</c:v></c:pt><c:pt idx="2"><c:v>3.5</c:v></c:pt><c:pt idx="3"><c:v>4.5</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000000-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:ser><c:idx val="1"/><c:order val="1"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 2</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent2"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>2.4</c:v></c:pt><c:pt idx="1"><c:v>4.4000000000000004</c:v></c:pt><c:pt idx="2"><c:v>1.8</c:v></c:pt><c:pt idx="3"><c:v>2.8</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000001-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:ser><c:idx val="2"/><c:order val="2"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 3</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent3"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>2</c:v></c:pt><c:pt idx="1"><c:v>2</c:v></c:pt><c:pt idx="2"><c:v>3</c:v></c:pt><c:pt idx="3"><c:v>5</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000002-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:dLbls><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls><c:gapWidth val="219"/><c:overlap val="-27"/><c:axId val="185176872"/><c:axId val="185181136"/></c:barChart><c:catAx><c:axId val="185176872"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/><c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr><a:noFill/><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="-60000000" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr><c:crossAx val="185181136"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx><c:valAx><c:axId val="185181136"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="l"/><c:majorGridlines><c:spPr><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:majorGridlines><c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="-60000000" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr><c:crossAx val="185176872"/><c:crosses val="autoZero"/><c:crossBetween val="between"/></c:valAx><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr></c:plotArea><c:legend><c:legendPos val="b"/><c:overlay val="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="0" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:legend><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/><c:showDLblsOverMax val="0"/></c:chart><c:spPr><a:solidFill><a:schemeClr val="bg1"/></a:solidFill><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:chartSpace>
-`.replace(/\t|\n/g, "");
-            const rId = chartManager.addImageRels(this.getNextImageName(), imgBuffer);
-            const sizePixel = 0;
-            console.log(tagValue);
-            return this.getRenderedPart(part, rId, sizePixel);
+            const chartXML = templates.getChartTestXml();
+            const rId = chartManager.addImageRels(this.getNextImageName(), chartXML);
+            return this.getRenderedPart(part, rId);
             // return { value: '<w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr><w:t>' + tagValue + '</w:t>' };
         } catch (e) {
             console.error(this.fileTypeConfig.tagTextXml);
             return { value: this.fileTypeConfig.tagTextXml };
         }
     }
-    getRenderedPart(part, rId, sizePixel) {
+    getRenderedPart(part, rId) {
         if (isNaN(rId)) {
+            console.error('rId is NaN, abortin');
+
             throw new Error("rId is NaN, aborting");
         }
-        const size = [DocUtils.convertPixelsToEmus(sizePixel[0]), DocUtils.convertPixelsToEmus(sizePixel[1])];
-        const centered = (this.options.centered || part.centered);
+
         let newText;
-        newText = this.getRenderedPartDocx(rId, size, centered);
+        newText = this.getRenderedPartDocx(rId);
         return { value: newText };
     }
-    getRenderedPartDocx(rId, size, centered) {
+    getRenderedPartDocx(rId) {
         // return centered ? templates.getChartXmlCentered(rId, size) : templates.getChartXml(rId, size);
-        return templates.getChartXml(rId, size);
+        return templates.getChartXml(rId);
     }
     getNextImageName() {
         const name = `chart_${this.imageNumber}.xml`;
@@ -143,7 +139,6 @@ module.exports = class ChartManager {
         this.mediaPrefix = fileType === "pptx" ? "../charts" : "charts";
         const relsFilePath = rels.getRelsFilePath(fileName, fileType);
         this.relsDoc = xmlDocuments[relsFilePath] || this.createEmptyRelsDoc(xmlDocuments, relsFilePath);
-        console.log(this.fileTypeName, fileName, fileType);
     }
     createEmptyRelsDoc(xmlDocuments, relsFileName) {
         const mainRels = this.prefix + "/_rels/" + (this.fileTypeName) + ".xml.rels";
@@ -166,7 +161,7 @@ module.exports = class ChartManager {
         xmlDocuments[relsFileName] = relsDoc;
         return relsDoc;
     }
-    loadImageRels() {
+    loadChartRels() {
             const iterable = this.relsDoc.getElementsByTagName("Relationship");
             return Array.prototype.reduce.call(iterable, function(max, relationship) {
                 const id = relationship.getAttribute("Id");
@@ -176,23 +171,22 @@ module.exports = class ChartManager {
                 return max;
             }, 0);
         }
-        // Add an extension type in the [Content_Types.xml], is used if for example you want word to be able to read png files (for every extension you add you need a contentType)
-    addExtensionRels(contentType, extension) {
+        // Add an extension type in the [Content_Types.xml], is used if for example you want word to be able to read png files (for every partName you add you need a contentType)
+    addOverrideRels(partName) {
             const contentTypeDoc = this.xmlDocuments["[Content_Types].xml"];
-            const defaultTags = contentTypeDoc.getElementsByTagName("Default");
-            const extensionRegistered = Array.prototype.some.call(defaultTags, function(tag) {
-                return tag.getAttribute("Extension") === extension;
+            const overrideTags = contentTypeDoc.getElementsByTagName("Override");
+            const partNameRegistered = Array.prototype.some.call(overrideTags, function(tag) {
+                return tag.getAttribute("PartName") === partName;
             });
-            if (extensionRegistered) {
+            if (partNameRegistered) {
                 return;
             }
             const types = contentTypeDoc.getElementsByTagName("Types")[0];
-            const newTag = contentTypeDoc.createElement("Default");
+            const newTag = contentTypeDoc.createElement("Override");
             newTag.namespaceURI = null;
-            newTag.setAttribute("ContentType", contentType);
-            newTag.setAttribute("Extension", extension);
+            newTag.setAttribute("PartName", '/' + partName);
+            newTag.setAttribute("ContentType", "application/vnd.openxmlformats-officedocument.drawingml.chart+xml");
             types.appendChild(newTag);
-            console.log(types);
         }
         // Add an image and returns it's Rid
     addImageRels(imageName, imageData, i) {
@@ -213,26 +207,27 @@ module.exports = class ChartManager {
             },
         };
         this.zip.file(image.name, image.data, image.options);
-        const extension = realImageName.replace(extensionRegex, "$1");
-        console.log(extension);
-        this.addExtensionRels(`image/${extension}`, extension);
+        this.addOverrideRels(imagePath);
         const relationships = this.relsDoc.getElementsByTagName("Relationships")[0];
         const newTag = this.relsDoc.createElement("Relationship");
         newTag.namespaceURI = null;
-        const maxRid = this.loadImageRels() + 1;
+        const maxRid = this.loadChartRels() + 1;
         newTag.setAttribute("Id", `rId${maxRid}`);
         newTag.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart");
         newTag.setAttribute("Target", `${this.mediaPrefix}/${realImageName}`);
-        console.log(extension, this.mediaPrefix, realImageName);
         relationships.appendChild(newTag);
         return maxRid;
     }
 };
 },{"./docUtils":3}],2:[function(require,module,exports){
 module.exports = {
-    getChartXml(rId, size) {
+    getChartXml(rId) {
         return `<w:rPr><w:noProof/></w:rPr><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="5274310" cy="3076575"/><wp:effectExtent l="0" t="0" r="2540" b="9525"/><wp:docPr id="1" name="图表 1"/><wp:cNvGraphicFramePr/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId${rId}"/></a:graphicData></a:graphic></wp:inline></w:drawing>
 		`.replace(/\t|\n/g, "");
+    },
+    getChartTestXml() {
+        return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:c16r2="http://schemas.microsoft.com/office/drawing/2015/06/chart"><c:date1904 val="0"/><c:lang val="zh-CN"/><c:roundedCorners val="0"/><mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><mc:Choice Requires="c14" xmlns:c14="http://schemas.microsoft.com/office/drawing/2007/8/2/chart"><c14:style val="102"/></mc:Choice><mc:Fallback><c:style val="2"/></mc:Fallback></mc:AlternateContent><c:chart><c:title><c:overlay val="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="0" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="1400" b="0" i="0" u="none" strike="noStrike" kern="1200" spc="0" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:title><c:autoTitleDeleted val="0"/><c:plotArea><c:layout/><c:barChart><c:barDir val="col"/><c:grouping val="clustered"/><c:varyColors val="0"/><c:ser><c:idx val="0"/><c:order val="0"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 1</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent1"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>4.3</c:v></c:pt><c:pt idx="1"><c:v>2.5</c:v></c:pt><c:pt idx="2"><c:v>3.5</c:v></c:pt><c:pt idx="3"><c:v>4.5</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000000-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:ser><c:idx val="1"/><c:order val="1"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 2</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent2"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>2.4</c:v></c:pt><c:pt idx="1"><c:v>4.4000000000000004</c:v></c:pt><c:pt idx="2"><c:v>1.8</c:v></c:pt><c:pt idx="3"><c:v>2.8</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000001-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:ser><c:idx val="2"/><c:order val="2"/><c:tx><c:strRef><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>系列 3</c:v></c:pt></c:strCache></c:strRef></c:tx><c:spPr><a:solidFill><a:schemeClr val="accent3"/></a:solidFill><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:strCache><c:ptCount val="4"/><c:pt idx="0"><c:v>类别 1</c:v></c:pt><c:pt idx="1"><c:v>类别 2</c:v></c:pt><c:pt idx="2"><c:v>类别 3</c:v></c:pt><c:pt idx="3"><c:v>类别 4</c:v></c:pt></c:strCache></c:strRef></c:cat><c:val><c:numRef><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="4"/><c:pt idx="0"><c:v>2</c:v></c:pt><c:pt idx="1"><c:v>2</c:v></c:pt><c:pt idx="2"><c:v>3</c:v></c:pt><c:pt idx="3"><c:v>5</c:v></c:pt></c:numCache></c:numRef></c:val><c:extLst><c:ext uri="{C3380CC4-5D6E-409C-BE32-E72D297353CC}" xmlns:c16="http://schemas.microsoft.com/office/drawing/2014/chart"><c16:uniqueId val="{00000002-506D-4025-B93B-256127B08B4A}"/></c:ext></c:extLst></c:ser><c:dLbls><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls><c:gapWidth val="219"/><c:overlap val="-27"/><c:axId val="185176872"/><c:axId val="185181136"/></c:barChart><c:catAx><c:axId val="185176872"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/><c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr><a:noFill/><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="-60000000" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr><c:crossAx val="185181136"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx><c:valAx><c:axId val="185181136"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="l"/><c:majorGridlines><c:spPr><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:majorGridlines><c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="-60000000" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr><c:crossAx val="185176872"/><c:crosses val="autoZero"/><c:crossBetween val="between"/></c:valAx><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr></c:plotArea><c:legend><c:legendPos val="b"/><c:overlay val="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot="0" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:legend><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/><c:showDLblsOverMax val="0"/></c:chart><c:spPr><a:solidFill><a:schemeClr val="bg1"/></a:solidFill><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr></c:chartSpace>
+`.replace(/\t|\n/g, "");
     },
     getChartXmlCentered(rId, size) {
         return `<w:p>

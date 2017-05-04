@@ -30,7 +30,6 @@ module.exports = class ChartManager {
         this.mediaPrefix = fileType === "pptx" ? "../charts" : "charts";
         const relsFilePath = rels.getRelsFilePath(fileName, fileType);
         this.relsDoc = xmlDocuments[relsFilePath] || this.createEmptyRelsDoc(xmlDocuments, relsFilePath);
-        console.log(this.fileTypeName, fileName, fileType);
     }
     createEmptyRelsDoc(xmlDocuments, relsFileName) {
         const mainRels = this.prefix + "/_rels/" + (this.fileTypeName) + ".xml.rels";
@@ -53,7 +52,7 @@ module.exports = class ChartManager {
         xmlDocuments[relsFileName] = relsDoc;
         return relsDoc;
     }
-    loadImageRels() {
+    loadChartRels() {
             const iterable = this.relsDoc.getElementsByTagName("Relationship");
             return Array.prototype.reduce.call(iterable, function(max, relationship) {
                 const id = relationship.getAttribute("Id");
@@ -63,12 +62,12 @@ module.exports = class ChartManager {
                 return max;
             }, 0);
         }
-        // Add an extension type in the [Content_Types.xml], is used if for example you want word to be able to read png files (for every extension you add you need a contentType)
-    addExtensionRels(contentType, extension) {
+        // Add an extension type in the [Content_Types.xml], is used if for example you want word to be able to read png files (for every partName you add you need a contentType)
+    addOverrideRels(partName) {
             const contentTypeDoc = this.xmlDocuments["[Content_Types].xml"];
             const overrideTags = contentTypeDoc.getElementsByTagName("Override");
             const partNameRegistered = Array.prototype.some.call(overrideTags, function(tag) {
-                return tag.getAttribute("PartName") === extension;
+                return tag.getAttribute("PartName") === partName;
             });
             if (partNameRegistered) {
                 return;
@@ -76,8 +75,8 @@ module.exports = class ChartManager {
             const types = contentTypeDoc.getElementsByTagName("Types")[0];
             const newTag = contentTypeDoc.createElement("Override");
             newTag.namespaceURI = null;
-            newTag.setAttribute("ContentType", "application/vnd.openxmlformats-package.core-properties+xml");
-            newTag.setAttribute("PartName", extension);
+            newTag.setAttribute("PartName", '/' + partName);
+            newTag.setAttribute("ContentType", "application/vnd.openxmlformats-officedocument.drawingml.chart+xml");
             types.appendChild(newTag);
         }
         // Add an image and returns it's Rid
@@ -99,17 +98,14 @@ module.exports = class ChartManager {
             },
         };
         this.zip.file(image.name, image.data, image.options);
-        const extension = realImageName.replace(extensionRegex, "$1");
-        console.log(extension, extensionRegex, realImageName, imagePath);
-        this.addExtensionRels(`image/${extension}`, extension);
+        this.addOverrideRels(imagePath);
         const relationships = this.relsDoc.getElementsByTagName("Relationships")[0];
         const newTag = this.relsDoc.createElement("Relationship");
         newTag.namespaceURI = null;
-        const maxRid = this.loadImageRels() + 1;
+        const maxRid = this.loadChartRels() + 1;
         newTag.setAttribute("Id", `rId${maxRid}`);
         newTag.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart");
         newTag.setAttribute("Target", `${this.mediaPrefix}/${realImageName}`);
-        console.log(extension, this.mediaPrefix, realImageName);
         relationships.appendChild(newTag);
         return maxRid;
     }
