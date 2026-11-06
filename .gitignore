@@ -39,3 +39,5 @@ jspm_packages
 .vs
 .idea/
 .build
+examples/out-*.docx
+package-lock.json

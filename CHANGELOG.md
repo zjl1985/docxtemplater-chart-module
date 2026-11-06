@@ -1,14 +1,14 @@
-### unreleased (master branch)
+### 4.0.0
+
+- Revive for docxtemplater ^3.40 (tested on 3.71.x) + PizZip.
+- Data-driven chart XML (no more hardcoded test chart).
+- Support modern `{ categories, series }` and legacy `{ lines }` shapes.
+- Chart types: bar (clustered column, default) and line.
+- Tags: `{$name}` inline, `{$$name}` centered.
+- Fix `part.type !== "placeholder"` operator-precedence bug.
+- Switch to `@xmldom/xmldom`; drop babel / browserify build chain.
+- Clean package.json (author zjl1985, correct repository URLs).
 
 ### 3.0.2
 
--	Fix issue with PPTX : Before, you had to add to your options : {fileType: "pptx"} in the module options passed as argument in the constructor of the module. Now, the fileType is retrieved from the main docxtemplater.
-
-### 3.0.1
-
--	Add support for PPTX.
--	Add centering of images with {%%image} syntax
-
-### 3.0.0
-
--	This version is compatible with docxtemplater 3.0.
+- Historical image-module-fork release (2017). Unmaintained until 4.0.0.
