@@ -1,2 +1,7 @@
-/*.docx
+test/
 examples/
+node_modules/
+.git/
+.gitignore
+.editorconfig
+*.tgz
